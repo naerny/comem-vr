@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "aframe-gui": "^0.5.1",
     "vue": "^3.5.11"
   },
   "devDependencies": {
