@@ -14,6 +14,13 @@
     }
     document.querySelector('a-scene').emit('enter-scene');
   }
+
+  // eventlistener on key enter
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      enterScene();
+    }
+  });
 </script>
 
 <template>
