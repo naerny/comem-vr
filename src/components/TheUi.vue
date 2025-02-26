@@ -4,6 +4,7 @@ import '../aframe/visibility.js'
 import '../aframe/outline.js';
 import UiShapePicker from './UiShapePicker.vue';
 import UiColorPicker from './UiColorPicker.vue';
+import UiSoundPicker from './UiSoundPicker.vue';
 import { onMounted } from 'vue';
 
 
@@ -49,6 +50,7 @@ import { onMounted } from 'vue';
 
         <UiShapePicker />
         <UiColorPicker />
+        <UiSoundPicker />
 
         <!-- <a-entity id="hud__shapeSelect" position="-.5 0 .15">
             <a-text value="Select shape" scale=".3 .3 .3" position="0 0 0" align="center"></a-text>

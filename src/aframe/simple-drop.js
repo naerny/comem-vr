@@ -41,18 +41,21 @@ AFRAME.registerSystem('simple-grab', {
     console.log("currentGrab grab: " + this.getCurrentGrab(hand));
     setTimeout(() => {
       document.addEventListener('click', this.dropEveryWhere);
+      hand.addEventListener('gripdown', this.dropEveryWhere);
     }, 100);    
   },
 
   dropEveryWhere: function () {
-    const hand = this.getDummyHand();
     const currentGrab = this.getCurrentGrab(hand);
     if (currentGrab) {
+
+      const hand = currentGrab.components['simple-grab'].grabbedBy;
       console.log('drop')
       currentGrab.components['simple-grab'].grabbedBy = null;
       this.removeCurrentGrab(hand, currentGrab, null);
       console.log("currentgrab drop: " + this.getCurrentGrab(hand));
       document.removeEventListener('click', this.dropEveryWhere);
+      hand.removeEventListener('gripdown', this.dropEveryWhere);
     }
   },
 
@@ -118,6 +121,8 @@ AFRAME.registerComponent('simple-grab', {
 
     // If something already grabbed, switch it
     const currentGrab = this.system.getCurrentGrab(this.grabbedBy);
+    if (currentGrab === this.el) return;
+    
     if (currentGrab) {
       copyPosition(this.el, currentGrab);
       copyRotation(this.el, currentGrab);
