@@ -1,7 +1,19 @@
 export const playSoundOnCollision = (event) => {
-    const soundEl = event.target;
-    soundEl.components.sound.playSound();    
-    // console.log("source: " , event.target.getAttribute('sound'));    
-    // event.detail.withEl.setAttribute('sound', event.target.getAttribute('sound'));
-    // console.log("target: " , event.detail.withEl);
+    let soundEl;
+
+    // if(event.target.classList.contains('music-item') || event.target.classList.contains('drumstick')) {
+    //     if(event.type === 'grab') {
+    //         soundEl = event.target.components.sound__grab;            
+    //         soundEl.playSound();
+    //     } else if(event.type === 'drop') {
+    //         soundEl = event.target.components.sound__drop;            
+    //         soundEl.playSound();            
+    //     }
+    // } else {
+    //     soundEl = event.target.components.sound;
+    //     soundEl.playSound();
+    // }
+
+    soundEl = event.target.components.sound;
+        soundEl.playSound();
 };

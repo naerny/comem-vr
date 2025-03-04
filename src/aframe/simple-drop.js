@@ -45,17 +45,17 @@ AFRAME.registerSystem('simple-grab', {
 
   onSceneClick: function (evt) {
     const hand = this.getDummyHand();
-    setTimeout(() => this.dropMidAir(hand), 100);
+    setTimeout(() => this.dropMidAir(hand), 200);
   },
 
   onLeftHandTrigger: function (evt) {
     // this.dropMidAir(this.leftHand);
-    setTimeout(() => this.dropMidAir(this.leftHand), 100);
+    setTimeout(() => this.dropMidAir(this.leftHand), 200);
   },
 
   onRightHandTrigger: function (evt) {
     // this.dropMidAir(this.rightHand);
-    setTimeout(() => this.dropMidAir(this.rightHand), 100);
+    setTimeout(() => this.dropMidAir(this.rightHand), 200);
   },
 
   dropMidAir: function (hand) {
@@ -72,8 +72,6 @@ AFRAME.registerSystem('simple-grab', {
     el.emit(this.data.grabEventName, { hand, el });
     hand.emit(this.data.grabEventName, { hand, el });
     this.el.emit(this.data.grabEventName, { hand, el });
-    console.log("Grab")
-    console.log("currentGrab grab: " + this.getCurrentGrab(hand));
     setTimeout(() => {
       document.addEventListener('click', this.dropEveryWhere);
       hand.addEventListener('gripdown', this.dropEveryWhere);

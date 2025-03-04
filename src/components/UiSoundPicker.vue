@@ -36,7 +36,7 @@ const handleCollision = (event) => {
     <a-entity position="0 1.1 -1" rotation="-75 0 0">
         <a-entity text="font: https://cdn.aframe.io/fonts/Exo2Bold.fnt; value: 03; align:center;" scale="4 4 4" position="0 .08 0"></a-entity>
         <a-entity text="font: https://cdn.aframe.io/fonts/Exo2Bold.fnt; value: Make it sound; align:center;" scale="2 2 2" position="0 -.05 0"></a-entity>
-        <a-plane  color="#404040" height=".5" width="1" ></a-plane>
+        <a-plane  color="#62748e" height=".5" width="1" ></a-plane>
     </a-entity>
 
 </a-entity>

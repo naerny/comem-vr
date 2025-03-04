@@ -1,5 +1,5 @@
 <script setup>
-import '../aframe/simple-drop.js';
+// import '../aframe/simple-drop.js';
 import '../aframe/visibility.js'
 import '../aframe/outline.js';
 import UiShapePicker from './UiShapePicker.vue';
