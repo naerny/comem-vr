@@ -5,44 +5,9 @@ import '../aframe/outline.js';
 import UiShapePicker from './UiShapePicker.vue';
 import UiColorPicker from './UiColorPicker.vue';
 import UiSoundPicker from './UiSoundPicker.vue';
+import UiGarbageBin from './UiGarbageBin.vue';
 import { onMounted } from 'vue';
 
-
-// const createBox = () => {
-//     console.log('createBox');
-//     const box = document.createElement('a-box');
-//     box.setAttribute('id', `instrument-${getInstrumentsSize() + 1}`);
-//     box.setAttribute('color', 'red');
-//     box.setAttribute('depth', '0.3');
-//     box.setAttribute('width', '0.3');
-//     box.setAttribute('height', '0.3');
-//     box.setAttribute('position', '0 1.5 -5');
-//     box.setAttribute('clickable');
-//     box.setAttribute('outline-on-event');
-//     box.setAttribute('simple-grab');
-//     document.querySelector('#instuments-container').appendChild(box);
-//     console.log('getInstrumentsSize', getInstrumentsSize());
-
-
-// };
-
-// const getInstrumentsSize = () => {
-//     return document.querySelector('#instuments-container').childElementCount;
-// };
-
-// const shapeSelector = () => {
-//     const selector = document.querySelectorAll('.selector');
-//     document.addEventListener('click', (e) => {
-//         if (e.target.classList.contains('selector')) {
-//             console.log('selector', e.target);
-//             selector.forEach((el) => {
-//                 el.classList.remove('selected');
-//             });
-//             e.target.classList.add('selected');
-//         }
-//     });
-
-// };
 </script>
 
 <template>
@@ -51,6 +16,7 @@ import { onMounted } from 'vue';
         <UiShapePicker />
         <UiColorPicker />
         <UiSoundPicker />
+        <UiGarbageBin />
 
         <!-- <a-entity id="hud__shapeSelect" position="-.5 0 .15">
             <a-text value="Select shape" scale=".3 .3 .3" position="0 0 0" align="center"></a-text>

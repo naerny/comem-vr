@@ -25,7 +25,7 @@
           geometry="primitive: circle; radius: 0.0003;"
           material="shader: flat; color: white;"
           cursor
-          raycaster="far: 4; objects: [clickable]; showLine: false;"
+          raycaster="far: 1; objects: [clickable]; showLine: false;"
           position="0 0 -0.1"
           disable-in-vr="component: raycaster; disableInAR: false;"
           hide-in-vr="hideInAR: false"
@@ -43,12 +43,8 @@
       <a-entity
         id="hand-left"
         hand-controls="hand: left"
-        blink-controls="
-          cameraRig: #camera-rig;
-          teleportOrigin: #head;
-          collisionEntities: [data-role='nav-mesh'];
-          snapTurn: false;
-        "
+        laser-controls="hand: left"
+        raycaster="far: 1; objects: [clickable]; showLine: true;"
         position="0 1.5 0"
         physx-grab
       >
@@ -63,7 +59,7 @@
         id="hand-right"
         hand-controls="hand: right"
         laser-controls="hand: right"
-        raycaster="far: 4; objects: [clickable]; showLine: true;"
+        raycaster="far: 1; objects: [clickable]; showLine: true;"
         position="0 1.5 0"
         physx-grab        
       >
