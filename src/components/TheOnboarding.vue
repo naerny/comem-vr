@@ -1,34 +1,56 @@
 <script setup>
-  import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-  defineProps({
-    loaded: Boolean,
-  });
+defineProps({
+  loaded: Boolean,
+});
 
-  const showOnboarding = ref(true);
+const showOnboarding = ref(true);
 
-  function enterScene() {
-    showOnboarding.value = false;
-    if (AFRAME.utils.device.checkHeadsetConnected() && !AFRAME.utils.device.isMobile()) {
-      document.querySelector('a-scene').enterVR();
-    }
-    document.querySelector('a-scene').emit('enter-scene');
+function enterScene() {
+  showOnboarding.value = false;
+  if (AFRAME.utils.device.checkHeadsetConnected() && !AFRAME.utils.device.isMobile()) {
+    document.querySelector('a-scene').enterVR();
   }
+  document.querySelector('a-scene').emit('enter-scene');
+}
 
-  // eventlistener on key enter
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      enterScene();
+// eventlistener on key enter
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    enterScene();
+  }
+});
+
+const getRandomDarkColor = () => {
+  const r = Math.floor(Math.random() * 100);
+  const g = Math.floor(Math.random() * 100);
+  const b = Math.floor(Math.random() * 100);
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
+let colorInterval;
+
+onMounted(() => {
+  colorInterval = setInterval(() => {
+    const onboardingElement = document.getElementById('onboarding');
+    if (onboardingElement) {
+      onboardingElement.style.backgroundColor = getRandomDarkColor();
     }
-  });
+  }, 3000); // Change color every 3 seconds
+});
+
+onBeforeUnmount(() => {
+  clearInterval(colorInterval);
+});
 </script>
 
 <template>
   <div id="onboarding" v-if="showOnboarding">
     <div>
-      <h1>A-Frame + Vite + Vue Boilerplate</h1>
+      <h1>The Beat Machine</h1>
       <p v-if="!loaded">loading...</p>
-      <button v-if="loaded" @click="enterScene()">Enter scene</button>
+      <button v-if="loaded" @click="enterScene()">Let's play!</button>
       <div class="licences">
         <section>
           <h4>Movement modes support</h4>
@@ -139,6 +161,7 @@
     font-family: monospace;
     z-index: 10000;
     overflow: auto;
+    transition: background-color 1s ease; /* Add this line for smooth transition */
   }
   #onboarding > * {
     margin: 0 auto;
@@ -158,8 +181,8 @@
     border: none;
     cursor: pointer;
   }
-</style>#onboarding li {
-#onboarding li {
-  font-size: 1rem;
-  text-align: left;
-}
+  #onboarding li {
+    font-size: 1rem;
+    text-align: left;
+  }
+</style>

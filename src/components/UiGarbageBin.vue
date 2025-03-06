@@ -1,10 +1,6 @@
 <script setup>
 import { deleteItem, undoDeleteItem } from '../utils/deleteItem';
 import '../aframe/listen-to.js';
-const handleCollision = (event) => {
-    console.log('Collision started:', event);
-    deleteItem(event)
-}
 
 const handleDrop = (event) => {
     deleteItem(event)
@@ -18,7 +14,7 @@ const handleGrab = (event) => {
 
 <template>
     <a-entity
-    position="1 .8 -.15"
+    position="1 .6 -.15"
     rotation="0 45 0">
         <a-box
         id="drop-zone-right"        

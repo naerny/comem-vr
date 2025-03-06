@@ -1,3 +1,5 @@
+import { playSound } from "./playSound";
+
 let timer = null;
 
 export function deleteItem(event) {       
@@ -7,10 +9,10 @@ export function deleteItem(event) {
     animBox.setAttribute('animation', 'property: scale; from: .31 .0 .31; to: .31 .31 .31; dur: 3000; easing: linear');
    
    timer = setTimeout(() => {
-    item.parentNode.removeChild(item);                
-        console.log('item deleted', item);
+    item.parentNode.removeChild(item);                        
         animBox.removeAttribute('animation');
         animBox.setAttribute('visible', 'false');        
+        playSound(event);
    }, 3000);
 }
 
