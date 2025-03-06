@@ -7,47 +7,21 @@ import '../aframe/tesselation-square.js';
 import '../aframe/bloom.js'
 import '../aframe/listen-to.js'
 import '../aframe/event-set.js'
-
-<<<<<<< HEAD
-  import '../aframe/simple-grab.js';
-  import '../aframe/outline.js';
-=======
-// import '../aframe/simple-grab.js';
 import '../aframe/simple-grab.js';
 import '../aframe/outline.js';
->>>>>>> tp-ocean
+
 
 const allAssetsLoaded = ref(false);
 </script>
 
 <template>
   <a-scene
-<<<<<<< HEAD
-    background="color: black;"
-    :webxr="`
-      requiredFeatures: local-floor;
-      referenceSpaceType: local-floor;
-      optionalFeatures: dom-overlay;
-      overlayElement: ${overlaySelector};
-    `"
-    xr-mode-ui="XRMode: xr"
-    physx="
-      autoLoad: true;
-      delay: 1000;
-      useDefaultScene: false;
-      wasmUrl: lib/physx.release.wasm;
-    "
-    outline
-    simple-grab
-  >
-=======
   stats
   fog="type: linear; color: #191026; near: 1; far: 10"
   background="color: #191026"
   outline
   obb-collider="showColliders: false"
   simple-grab="allowMidAirDrop:true;">
->>>>>>> tp-ocean
 
     <a-assets @loaded="allAssetsLoaded = true">
       <a-asset-item id="dancefloor" src="assets/models/dancefloor.glb"></a-asset-item>
