@@ -44,7 +44,7 @@
         id="hand-left"
         hand-controls="hand: left"
         laser-controls="hand: left"
-        raycaster="far: 1; objects: [clickable]; showLine: true;"
+        raycaster="far: .1; objects: [clickable]; showLine: true;"
         position="0 1.5 0"
         physx-grab
       >
@@ -59,7 +59,7 @@
         id="hand-right"
         hand-controls="hand: right"
         laser-controls="hand: right"
-        raycaster="far: 1; objects: [clickable]; showLine: true;"
+        raycaster="far: .1; objects: [clickable]; showLine: true;"
         position="0 1.5 0"
         physx-grab        
       >
