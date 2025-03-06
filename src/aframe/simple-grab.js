@@ -4,6 +4,7 @@ import Keyboard from '../utils/keyboard.js';
 
 AFRAME.registerSystem('simple-grab', {
   schema: {
+    allowMidAirDrop: {type: 'boolean', default: false},
     handRight: {type: 'selector', default: '#hand-right'},
     handLeft: {type: 'selector', default: '#hand-left'},
     dummyHandRight: {type: 'selector', default: '#dummy-hand-right'},
@@ -27,6 +28,39 @@ AFRAME.registerSystem('simple-grab', {
     this.currentGrab.set(this.rightHand, null);
     this.currentGrab.set(this.dummyHandLeft, null);
     this.currentGrab.set(this.dummyHandRight, null);
+    this.isGrabInProgress = false;
+    this.timerGrabInProgress = null;
+
+    if (this.data.allowMidAirDrop) {
+      this.onSceneClick = this.onSceneClick.bind(this);
+      this.onLeftHandTrigger = this.onLeftHandTrigger.bind(this);
+      this.onRightHandTrigger = this.onRightHandTrigger.bind(this);
+      document.addEventListener('click', this.onSceneClick);
+      // For VR, listen to the controller trigger events
+      this.leftHand.addEventListener('triggerdown', this.onLeftHandTrigger);
+      this.rightHand.addEventListener('triggerdown', this.onRightHandTrigger);
+    }
+  },
+
+  onSceneClick: function (evt) {
+    const hand = this.getDummyHand();
+    setTimeout(() => this.dropMidAir(hand), 200);
+  },
+
+  onLeftHandTrigger: function (evt) {
+    setTimeout(() => this.dropMidAir(this.leftHand), 200);
+  },
+
+  onRightHandTrigger: function (evt) {
+    setTimeout(() => this.dropMidAir(this.rightHand), 200);
+  },
+
+  dropMidAir: function (hand) {
+    if (this.isGrabInProgress) return;
+    const currentGrab = this.getCurrentGrab(hand);
+    if (currentGrab === null) return;
+    this.removeCurrentGrab(hand, currentGrab, null);
+    currentGrab.components['simple-grab'].grabbedBy = null;
   },
 
   setCurrentGrab: function (hand, el) {
@@ -43,7 +77,7 @@ AFRAME.registerSystem('simple-grab', {
 
   removeCurrentGrab: function (hand, el, dropZone) {
     this.currentGrab.set(hand, null);
-    // emit the drop event on: the grabbed entity, the hand, the scene and the drop zone (if any)
+    // Emit the drop event on: the grabbed entity, the hand, the scene and the drop zone (if any)
     el.emit(this.data.dropEventName, {hand, el, dropZone});
     hand.emit(this.data.dropEventName, {hand, el, dropZone});
     if (dropZone) dropZone.emit(this.data.dropEventName, {hand, el, dropZone});
@@ -97,8 +131,15 @@ AFRAME.registerComponent('simple-grab', {
     this.grabbedBy = this.system.getHand(evt);
     if (this.grabbedBy === null) return;
 
-    // If something already grabbed, switch it
     const currentGrab = this.system.getCurrentGrab(this.grabbedBy);
+    // Do nothing if the object is already grabbed by the same hand
+    if (currentGrab === this.el) return;
+
+    this.system.isGrabInProgress = true;
+    if (this.system.timerGrabInProgress) clearTimeout(this.system.timerGrabInProgress);
+    this.system.timerGrabInProgress = setTimeout(() => this.system.isGrabInProgress = false, 500);
+
+    // If something already grabbed, switch it
     if (currentGrab) {
       copyPosition(this.el, currentGrab);
       copyRotation(this.el, currentGrab);
@@ -119,7 +160,7 @@ AFRAME.registerComponent('simple-grab', {
     // If the object was grabbed from a drop zone, remove it from there
     if (this.actualDropZone) {
       if (!currentGrab) {
-        // if the drop zone is now empty, trigger an undrop event
+        // The drop zone is now empty, trigger an undrop event
         this.system.removeFromDropZone(this.grabbedBy, this.actualDropZone.components['simple-grab-drop-zone'].droppedEl, this.actualDropZone);
         this.actualDropZone.components['simple-grab-drop-zone'].droppedEl = null;
       }
@@ -162,6 +203,10 @@ AFRAME.registerComponent('simple-grab-drop-zone', {
 
     // disallow dropping if the drop zone is already occupied
     if (this.data.dropOnly && this.droppedEl !== null) return;
+
+    this.system.isGrabInProgress = true;
+    if (this.system.timerGrabInProgress) clearTimeout(this.system.timerGrabInProgress);
+    this.system.timerGrabInProgress = setTimeout(() => this.system.isGrabInProgress = false, 500);
 
     // drop the current grab
     if (currentGrab) {
